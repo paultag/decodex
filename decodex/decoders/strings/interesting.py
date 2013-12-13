@@ -49,4 +49,5 @@ class InterestingDecoder(Decoder):
         ccounts = Counter("".join(words))
 
         freqs = {x: (y / ccount) for x, y in ccounts.items()}
-        print(freqs)
+        deltas = {x: abs(freqs[x] - FREQUENCIES[x]) for x in freqs}
+        print(deltas)
