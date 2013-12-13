@@ -25,4 +25,4 @@ import codecs
 class Rot13Decoder(Decoder):
     def decode(self, stream):
         chars = "".join(stream.iter_str())
-        yield Result(codecs.encode(chars, 'rot_13'), 'rot13')
+        yield Result(chars, codecs.encode(chars, 'rot_13'), 'rot13ed')

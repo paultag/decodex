@@ -25,4 +25,6 @@ class AcrosticDecoder(Decoder):
         if len(words) == 1:
             return
 
-        yield Result("".join([x[0] for x in words]), "Acrostic")
+        yield Result(" ".join(words),
+                     "".join([x[0] for x in words]),
+                     "Acrostic-ed")

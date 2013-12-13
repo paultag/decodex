@@ -17,9 +17,14 @@
 
 
 class Result(object):
-    def __init__(self, data, name):
+    def __init__(self, extracted_from, data, name):
+        self.extracted_from = extracted_from
         self.data = data
         self.name = name
 
     def __str__(self):
-        return "%s: %s" % (self.name, self.data)
+        return "%s %s is %s" % (
+            self.extracted_from,
+            self.name,
+            self.data,
+        )

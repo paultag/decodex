@@ -24,5 +24,6 @@ class AnagramDecoder(Decoder):
 
     def decode(self, stream):
         w = Words('american-english')
-        for word in w.anagram(stream, depth=1):
-            yield Result(" ".join(word), 'Anagram')
+        chars = "".join(stream.iter_str())
+        for word in w.anagram(chars, depth=1):
+            yield Result(chars, " ".join(word), 'Anagramed')

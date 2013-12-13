@@ -28,4 +28,5 @@ class AlphabetizingDecoder(Decoder):
         strs = list(stream.iter_str())
         strs_sorted = sorted(strs)
         if strs != strs_sorted:
-            yield Result("".join(sorted(strs_sorted)), "Alphabetized")
+            yield Result("".join(strs),
+                         "".join(sorted(strs_sorted)), "Alphabetized")
