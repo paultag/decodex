@@ -1,0 +1,13 @@
+
+
+          INPUT STREAM
+               |
+               | (bytes)
+               |
+               V
+              /'\
+            /     \
+          /  decode \
+          \ input   /
+            \     /
+              \./
