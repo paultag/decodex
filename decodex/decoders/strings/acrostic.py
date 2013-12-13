@@ -15,20 +15,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import importlib
+from decodex.decoder import Decoder
+from decodex.result import Result
 
 
-ACTIVE_DECODERS = [
-    'decodex.decoders.strings.alphabetize.AlphabetizingDecoder',
-    'decodex.decoders.strings.anagram.AnagramDecoder',
-    'decodex.decoders.strings.rot13.Rot13Decoder',
-#    'decodex.decoders.strings.interesting.InterestingDecoder',
-    'decodex.decoders.strings.acrostic.AcrosticDecoder',
-]
+class AcrosticDecoder(Decoder):
+    def decode(self, stream):
+        words = "".join(stream.iter_str()).split()
+        if len(words) == 1:
+            return
 
-
-def iter_decoders():
-    for decoder in ACTIVE_DECODERS:
-        module, class_ = decoder.rsplit(".", 1)
-        mod = importlib.import_module(module)
-        yield getattr(mod, class_)()
+        yield Result("".join([x[0] for x in words]), "Acrostic")
