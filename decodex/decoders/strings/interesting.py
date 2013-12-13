@@ -22,18 +22,20 @@ from collections import Counter
 
 
 FREQUENCIES = {
-    'e': 12.7, 't': 9, 'a': 8.1, 'o': 7.5, 'i': 6.9, 'n': 6.7, 's': 6.3,
-    'h': 6, 'r': 5.9, 'd': 4.2, 'l': 4, 'c': 2.7, 'u': 2.7, 'm': 2.4, 'w': 2.3,
-    'f': 2.2, 'g': 2.0, 'y': 1.9, 'p': 1.9, 'b': 1.4, 'v': 0.9, 'k': 0.7,
-    'j': 0.1, 'x': 0.1, 'q': 0.09, 'z': 0.07,
+    'e': 0.127, 't': 0.09, 'a': 0.081, 'o': 0.075, 'i': 0.069, 'n': 0.067,
+    's': 0.063, 'h': 0.06, 'r': 0.059, 'd': 0.042, 'l': 0.04, 'c': 0.027,
+    'u': 0.027, 'm': 0.024, 'w': 0.023, 'f': 0.022, 'g': 0.020, 'y': 0.019,
+    'p': 0.019, 'b': 0.014, 'v': 0.009, 'k': 0.007, 'j': 0.001, 'x': 0.001,
+    'q': 0.0009, 'z': 0.0007,
     # Lifted shamelessly from English wikipedia.
 }
 
-START_FREQUENCIES = {  # Starting letter freqs
-    't': 16.6, 'a': 11.6, 's': 7.7, 'h': 7.2, 'w': 6.7, 'i': 6.2, 'o': 4.7,
-    'b': 4.3, 'm': 3.7, 'f': 3.5, 'c': 2.7, 'l': 2.6, 'd': 2.5, 'p': 2.3,
-    'n': 2, 'e': 1.9, 'g': 1.6, 'r': 1.6, 'y': 1.4, 'u': 1.4, 'v': 0.6,
-    'j': 0.5, 'k': 0.5, 'q': 0.1, 'x': 0.03, 'z': 0.03,
+START_FREQUENCIES = {
+    't': 0.166, 'a': 0.116, 's': 0.077, 'h': 0.072, 'w': 0.067, 'i': 0.062,
+    'o': 0.047, 'b': 0.043, 'm': 0.037, 'f': 0.035, 'c': 0.027, 'l': 0.026,
+    'd': 0.025, 'p': 0.023, 'n': 0.02, 'e': 0.019, 'g': 0.016, 'r': 0.016,
+    'y': 0.014, 'u': 0.014, 'v': 0.006, 'j': 0.005, 'k': 0.005, 'q': 0.001,
+    'x': 0.0003, 'z': 0.0003,
     # Lifted shamelessly from English wikipedia.
 }
 
@@ -44,15 +46,7 @@ class InterestingDecoder(Decoder):
         words = chars.split()
 
         ccount = len([x for x in chars if x != ' '])
-        freqs = Counter("".join(words))
+        ccounts = Counter("".join(words))
 
-        cypher = sorted(freqs)
-        english = list(reversed([x[0] for x in sorted(FREQUENCIES.items(),
-                                                 key=lambda x: x[1])]))
-        buf = ""
-        mapping = dict(zip(cypher, english))
-        for char in chars:
-            if char in mapping:  # We leave out spaces.
-                buf += mapping[char]
-
-        yield Result(buf, 'Frequency Subst')
+        freqs = {x: (y / ccount) for x, y in ccounts.items()}
+        print(freqs)

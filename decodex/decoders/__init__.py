@@ -22,7 +22,7 @@ ACTIVE_DECODERS = [
     'decodex.decoders.strings.alphabetize.AlphabetizingDecoder',
     'decodex.decoders.strings.anagram.AnagramDecoder',
     'decodex.decoders.strings.rot13.Rot13Decoder',
-    #'decodex.decoders.strings.interesting.InterestingDecoder',
+    'decodex.decoders.strings.interesting.InterestingDecoder',
     'decodex.decoders.strings.acrostic.AcrosticDecoder',
 ]
 

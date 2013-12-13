@@ -43,10 +43,12 @@ class Words(object):
     def __init__(self, dictionary):
         self.path = "/usr/share/dict/%s" % (dictionary)
         self.mapping = defaultdict(set)
+        self.word_hash = {}
         self._build_map()
 
     def _build_map(self):
         for line in (cleanup(x) for x in open(self.path, 'r')):
+            self.word_hash[line] = line
             self.mapping["".join(sorted(line))].add(line)
 
     def anagram(self, word, depth=2):
