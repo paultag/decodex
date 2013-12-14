@@ -37,3 +37,4 @@ class Stream(object):
                 buf = ""
                 continue
             buf += ch
+        yield buf
