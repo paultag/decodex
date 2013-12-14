@@ -22,7 +22,8 @@ from decodex.decoders import iter_decoders
 
 def main():
     print("OK. What are you working on?")
-    stream = Stream(sys.stdin)  # Let's grab some input.
+    stream = Stream(sys.stdin.readline().rstrip("\n"), "string")
+    # Let's grab some input.
 
     for decoder in iter_decoders():
         for result in decoder.decode(stream):

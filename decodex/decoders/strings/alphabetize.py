@@ -25,7 +25,7 @@ class AlphabetizingDecoder(Decoder):
     """
 
     def decode(self, stream):
-        strs = list(stream.iter_str())
+        strs = list(stream)
         strs_sorted = sorted(strs)
         if strs != strs_sorted:
             yield Result("".join(strs),

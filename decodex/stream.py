@@ -17,12 +17,23 @@
 
 
 class Stream(object):
-    def __init__(self, stream):
-        self.stream = stream.readline().rstrip('\n')
+    def __init__(self, stream, type_):
+        self.stream = stream
+        self.type_ = type_
 
     def __iter__(self):
         for el in self.stream:
             yield el
 
-    def iter_str(self):
-        return iter(self)
+    def iter_split(self):
+        if self.type_ != "string":
+            raise ValueError("Stream isn't of type string")
+
+        buf = ""
+        for ch in self:
+            if ch == " " or ch == "\n" or ch == "\t":
+                if buf:
+                    yield buf
+                buf = ""
+                continue
+            buf += ch
