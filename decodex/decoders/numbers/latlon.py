@@ -15,22 +15,33 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import importlib
+from decodex.decoder import Decoder
+from decodex.result import Result
 
 
-ACTIVE_DECODERS = [
-    'decodex.decoders.strings.alphabetize.AlphabetizingDecoder',
-    'decodex.decoders.strings.anagram.AnagramDecoder',
-    'decodex.decoders.strings.rot13.Rot13Decoder',
-    #'decodex.decoders.strings.interesting.InterestingDecoder',
-    'decodex.decoders.strings.acrostic.AcrosticDecoder',
-    'decodex.decoders.numbers.ascii.AsciiDecoder',
-    'decodex.decoders.numbers.latlon.LatLonDecoder',
-]
+class LatLonDecoder(Decoder):
 
+    def decode(self, stream):
+        if stream.type_ not in ['number', 'float']:
+            return
 
-def iter_decoders():
-    for decoder in ACTIVE_DECODERS:
-        module, class_ = decoder.rsplit(".", 1)
-        mod = importlib.import_module(module)
-        yield getattr(mod, class_)()
+        stream = list(stream)
+        if len(stream) != 2:  # Handle z
+            return
+
+        def _(lat, lon):
+            if lat < -90 or lat > 90:
+                return None
+            if lon < -180 or lon > 180:
+                return None
+            return Result(stream, "lat:%s, lon:%s" % (lat, lon), 'Lat/Lon')
+
+        lat, lon = stream
+        result = _(lat, lon)
+        if result:
+            yield result
+
+        lon, lat = stream
+        result = _(lat, lon)
+        if result:
+            yield result

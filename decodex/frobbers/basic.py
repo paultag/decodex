@@ -21,7 +21,15 @@ from decodex.stream import Stream
 def number_stream(name):
     def ns(fn):
         def _(stream):
-            s = Stream(list(fn(stream)), 'number')
+            type_ = 'number'
+            things = list(fn(stream))
+            if not things:
+                return None
+
+            if any((isinstance(x, float) for x in things)):
+                type_ = 'float'
+
+            s = Stream(things, type_)
             s.frobber = name
             return s
         return _
@@ -34,7 +42,10 @@ def base10(stream):
         try:
             yield int(block)
         except ValueError:
-            continue
+            try:
+                yield float(block)
+            except ValueError:
+                continue
 
 
 @number_stream("base16")

@@ -21,4 +21,6 @@ def iter_streams(input_):
     yield null
 
     for frobber in iter_frobbers():
-        yield frobber(null)
+        stream = frobber(null)
+        if stream:
+            yield stream
