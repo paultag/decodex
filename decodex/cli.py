@@ -16,15 +16,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from decodex.stream import Stream
-from decodex.decoders import iter_decoders
+from decodex import decode
 
 
 def main():
     print("OK. What are you working on?")
-    stream = Stream(sys.stdin.readline().rstrip("\n"), "string")
-    # Let's grab some input.
-
-    for decoder in iter_decoders():
-        for result in decoder.decode(stream):
-            print(result)
+    data = sys.stdin.readline().rstrip("\n")
+    for result in decode(data):
+        print(result)

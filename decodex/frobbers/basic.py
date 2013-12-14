@@ -15,18 +15,28 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from decodex.decoder import Decoder
-from decodex.result import Result
-from decodex.utils.words import Words
+from decodex.stream import Stream
 
 
-class AnagramDecoder(Decoder):
+def number_stream(fn):
+    def _(stream):
+        return Stream(list(fn(stream)), 'number')
+    return _
 
-    def decode(self, stream):
-        if stream.type_ != 'string':
-            return
 
-        w = Words('american-english')
-        chars = "".join(stream)
-        for word in w.anagram(chars, depth=1):
-            yield Result(chars, " ".join(word), 'Anagramed')
+@number_stream
+def base10(stream):
+    for block in stream.iter_split():
+        try:
+            yield int(block)
+        except ValueError:
+            continue
+
+
+@number_stream
+def base16(stream):
+    for block in stream.iter_split():
+        try:
+            yield int(block, 16)
+        except ValueError:
+            continue

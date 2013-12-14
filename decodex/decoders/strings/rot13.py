@@ -24,5 +24,8 @@ import codecs
 
 class Rot13Decoder(Decoder):
     def decode(self, stream):
+        if stream.type_ != 'string':
+            return
+
         chars = "".join(stream)
         yield Result(chars, codecs.encode(chars, 'rot_13'), 'rot13ed')

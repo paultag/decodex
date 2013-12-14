@@ -21,6 +21,9 @@ from decodex.result import Result
 
 class AcrosticDecoder(Decoder):
     def decode(self, stream):
+        if stream.type_ != 'string':
+            return
+
         words = "".join(stream).split()
         if len(words) == 1:
             return

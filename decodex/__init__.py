@@ -17,3 +17,13 @@
 
 __appname__ = 'decodex'
 __version__ = '0.0~pre1'
+
+
+import decodex.decoders
+import decodex.frobbers
+
+
+def decode(input_):
+    for stream in decodex.frobbers.iter_streams(input_):
+        for entry in decodex.decoders.iter_decoders():
+            yield from entry.decode(stream)

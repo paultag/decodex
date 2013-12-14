@@ -42,6 +42,9 @@ START_FREQUENCIES = {
 
 class InterestingDecoder(Decoder):
     def decode(self, stream):
+        if stream.type_ != 'string':
+            return
+
         chars = "".join(stream).lower()
         words = chars.split()
 
