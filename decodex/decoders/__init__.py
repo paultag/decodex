@@ -24,6 +24,7 @@ ACTIVE_DECODERS = [
     'decodex.decoders.strings.rot13.Rot13Decoder',
     #'decodex.decoders.strings.interesting.InterestingDecoder',
     'decodex.decoders.strings.acrostic.AcrosticDecoder',
+    'decodex.decoders.numbers.ascii.AsciiDecoder',
 ]
 
 

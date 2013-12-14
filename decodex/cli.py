@@ -22,5 +22,5 @@ from decodex import decode
 def main():
     print("OK. What are you working on?")
     data = sys.stdin.readline().rstrip("\n")
-    for result in decode(data):
-        print(result)
+    for result, stream in decode(data):
+        print(stream.frobber, result)

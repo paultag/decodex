@@ -18,13 +18,17 @@
 from decodex.stream import Stream
 
 
-def number_stream(fn):
-    def _(stream):
-        return Stream(list(fn(stream)), 'number')
-    return _
+def number_stream(name):
+    def ns(fn):
+        def _(stream):
+            s = Stream(list(fn(stream)), 'number')
+            s.frobber = name
+            return s
+        return _
+    return ns
 
 
-@number_stream
+@number_stream("base10")
 def base10(stream):
     for block in stream.iter_split():
         try:
@@ -33,7 +37,7 @@ def base10(stream):
             continue
 
 
-@number_stream
+@number_stream("base16")
 def base16(stream):
     for block in stream.iter_split():
         try:

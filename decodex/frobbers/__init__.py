@@ -17,6 +17,7 @@ def iter_frobbers():
 
 def iter_streams(input_):
     null = Stream(input_, 'string')
+    null.frobber = 'raw'
     yield null
 
     for frobber in iter_frobbers():

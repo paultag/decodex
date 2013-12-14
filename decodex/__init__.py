@@ -26,4 +26,5 @@ import decodex.frobbers
 def decode(input_):
     for stream in decodex.frobbers.iter_streams(input_):
         for entry in decodex.decoders.iter_decoders():
-            yield from entry.decode(stream)
+            for result in entry.decode(stream):
+                yield (result, stream)
